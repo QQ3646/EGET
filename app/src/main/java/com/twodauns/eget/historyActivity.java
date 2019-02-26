@@ -22,8 +22,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -38,12 +40,13 @@ public class historyActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     SQLiteHelper db;
     Date[] date;
+    ArrayList<String> names;
     TableLayout tableLayout;
     TableRow.LayoutParams params;
     View vieww;
     boolean haveFiltered = false;
     boolean dataWasSet = false;
-    boolean changeImage = false;
+    CheckBox[] checkBoxes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +60,25 @@ public class historyActivity extends AppCompatActivity
         onUpdate();
         FloatingActionButton floatingActionButton = findViewById(R.id.floatingActionButton);
         floatingActionButton.setOnClickListener(view -> {
-            db.setLessons("s");
-            onUpdate();
+            EditText editText = new EditText(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setView(editText)
+                    .setTitle("Введи что-то")
+                    .setPositiveButton("Добавить", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            db.setLessons(editText.getText().toString());
+                            onUpdate();
+                        }
+                    })
+                    .setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+            builder.show();
+
         });
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -78,9 +98,7 @@ public class historyActivity extends AppCompatActivity
         builder.setView(inflater.inflate(R.layout.date_alert, null))
                 .setPositiveButton("Применить", (dialog, id1) -> {
                     builder.create();
-//                    Button viewById = vieww.findViewById(R.id.button19);
                     dataWasSet = true;
-//                    viewById.setBackgroundResource(R.color.datePlus);
                 })
                 .setNegativeButton("Отмена", (dialog, id1) -> dialog.cancel());
 
@@ -90,33 +108,22 @@ public class historyActivity extends AppCompatActivity
     public void onUpdate(String[] names) {
         tableLayout.removeAllViews();
         ArrayList<SQLiteHelper.NameFromSQL> nameFromSQLS;
-        if(names == null)
-        nameFromSQLS = db.getLessons();
+        if (names == null)
+            nameFromSQLS = db.getLessons();
         else nameFromSQLS = db.getLessons(names, null);
         for (SQLiteHelper.NameFromSQL name :
                 nameFromSQLS) {
-//            for (int i = 0; i < 3; i++) {
-//                TextView textView = new TextView(this);
-//                textView.setText(name.getInfo()[i]);
-//                textView.setGravity(Gravity.CENTER_HORIZONTAL);
-//                if(i == 2) textView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, .2f));
-//                else textView.setLayoutParams(params);
-//                textView.setTextSize(20f);
-//                tableRow.addView(textView);
             Button button = new Button(this);
             button.setText(name.Date + "      " + name.NOS + "        " + name.TP);
             button.setTextSize(20f);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            button.setOnClickListener(view -> {
 
-                }
             });
-            //          }
             tableLayout.addView(button);
         }
     }
-    public void onUpdate(){
+
+    public void onUpdate() {
         onUpdate(null);
     }
 
@@ -146,72 +153,107 @@ public class historyActivity extends AppCompatActivity
         if (id == R.id.action_sort) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             // Get the layout inflater
+//            LayoutInflater inflater = this.getLayoutInflater();
+//            vieww = inflater.inflate(R.layout.alertfilter, null);
+////            TableRow tableRow = vieww.findViewById(R.id.tableRow2);
+////            Button button = new Button(this);
+////            button.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.01f));
+////            button.setOnClickListener(this::onClick);
+////            button.setText("Настроить дату");
+////            Thread thread = new Thread(() -> {
+////                runOnUiThread(() -> {
+////                    if (dataWasSet) {
+////                        button.setBackgroundColor(getResources().getColor(R.color.datePlus));
+////                    } else {
+////                        button.setBackgroundColor(getResources().getColor(R.color.dateMinus));
+////                    }
+////                });
+////            });
+////            thread.run();
+//            //tableRow.addView(button, 1);
+//            ImageView button = vieww.findViewById(R.id.imageView2);
+//            button.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    if(!changeImage)
+//                        button.setImageDrawable(getResources().getDrawable(R.drawable.baseline_keyboard_arrow_up_24));
+//                    else button.setImageDrawable(getResources().getDrawable(R.drawable.baseline_keyboard_arrow_down_24));
+//                }
+//            });
+//            LinearLayout linearLayout = vieww.findViewById(R.id.linearLayout);
+            int j = 0;
             LayoutInflater inflater = this.getLayoutInflater();
             vieww = inflater.inflate(R.layout.alertfilter, null);
-//            TableRow tableRow = vieww.findViewById(R.id.tableRow2);
-//            Button button = new Button(this);
-//            button.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.01f));
-//            button.setOnClickListener(this::onClick);
-//            button.setText("Настроить дату");
-//            Thread thread = new Thread(() -> {
-//                runOnUiThread(() -> {
-//                    if (dataWasSet) {
-//                        button.setBackgroundColor(getResources().getColor(R.color.datePlus));
-//                    } else {
-//                        button.setBackgroundColor(getResources().getColor(R.color.dateMinus));
-//                    }
-//                });
-//            });
-//            thread.run();
-            //tableRow.addView(button, 1);
-            ImageView button = vieww.findViewById(R.id.imageView2);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(!changeImage)
-                        button.setImageDrawable(getResources().getDrawable(R.drawable.baseline_keyboard_arrow_up_24));
-                    else button.setImageDrawable(getResources().getDrawable(R.drawable.baseline_keyboard_arrow_down_24));
+            LinearLayout listOfLessons = vieww.findViewById(R.id.listOfLessons);
+            if (!haveFiltered) {
+                TreeSet<String> nameSet = db.getName();
+                checkBoxes = new CheckBox[nameSet.size()];
+                for (String name :
+                        nameSet) {
+                    checkBoxes[j] = new CheckBox(this);
+                    checkBoxes[j].setText(name);
+                    checkBoxes[j].setTextSize(20f);
+                    listOfLessons.addView(checkBoxes[j]);
+                    j++;
                 }
-            });
-            LinearLayout linearLayout = vieww.findViewById(R.id.linearLayout);
-            TreeSet<String> nameSet = db.getName();
-            CheckBox checkBox[] = new CheckBox[nameSet.size()];
-            int j = 0;
-            for (String name :
-                    nameSet) {
-                checkBox[j] = new CheckBox(this);
-                checkBox[j].setText(name);
-                linearLayout.addView(checkBox[j]);
-                j++;
+            } else {
+                int i = 0;
+                for (CheckBox name : checkBoxes) {
+                    ((LinearLayout) name.getParent()).removeView(name);
+                    listOfLessons.addView(name, i);
+                    i++;
+                }
             }
+//            else {
+//                listOfLessons.removeAllViews();
+//                for (CheckBox name :
+//                        checkBoxes) {
+//                    listOfLessons.addView(name);
+//                }
+//            }
+//            scrollView.removeAllViews();
+//            scrollView.addView(listOfLessons);
             builder.setView(vieww)
                     .setPositiveButton("Применить", (dialog, id1) -> {
-                        for (CheckBox check:
-                             checkBox) {
-                            
+                        names = new ArrayList<>();
+                        for (CheckBox checkBox :
+                                checkBoxes) {
+                            if (checkBox.isChecked()) {
+                                names.add((String) checkBox.getText());
+                            }
                         }
-                        haveFiltered = true;
+                        if (names.size() != 0) {
+                            int k = 0;
+                            String[] namesFromFiltr = new String[names.size()];
+                            for (String name :
+                                    names) {
+                                namesFromFiltr[k] = name;
+                                k++;
+                            }
+                            onUpdate(namesFromFiltr);
+                            haveFiltered = true;
+                        } else {
+                            onUpdate();
+                            names.clear();
+                            haveFiltered = false;
+                        }
                     })
                     .setNegativeButton("Отмена", (dialog, id1) -> dialog.cancel());
-
             if (haveFiltered) {
                 builder.setNeutralButton("Сбросить", ((dialogInterface, i) -> {
-
+                    onUpdate();
+                    names.clear();
+                    haveFiltered = false;
                 }));
             }
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
-//            Thread thread = new Thread(() -> {
-//                runOnUiThread(() -> {
-//                    if(dataWasSet) button.setBackgroundColor(getResources().getColor(R.color.datePlus));
-//                    else button.setBackgroundColor(getResources().getColor(R.color.dateMinus));
-//                });
-//            });
-            //thread.run();
+            return false;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

@@ -19,19 +19,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
 
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-//        String query = "CREATE TABLE Subjects (\n" +
-//                "    _id      INTEGER PRIMARY KEY AUTOINCREMENT\n" +
-//                "                     UNIQUE\n" +
-//                "                     NOT NULL,\n" +
-//                "    Subjects STRING,\n" +
-//                "    DOTW     STRING\n" +
-//                ");\n";
         String query = "CREATE TABLE \"history\" (\n" +
                 "\t\"_id\"\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,\n" +
                 "\t\"Date\"\tTEXT,\n" +
                 "\t\"NOS\"\tTEXT,\n" +
-                "\t\"TP\"\tINTEGER,\n" +
-                "\t\"Rating\"\tINTEGER\n" +
+                "\t\"TP\"\tINTEGER\n" +
                 ");";
         sqLiteDatabase.execSQL(query);
     }
@@ -42,11 +34,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         String TP; //true points - количество баллов
         byte Rating; //оценка
 
-        NameFromSQL(String NOS, String Date, String TP, int Rating) {
+        NameFromSQL(String NOS, String Date, String TP) {
             this.Date = Date;
             this.NOS = NOS;
             this.TP = TP;
-            this.Rating = (byte) Rating;
         }
 
         public String[] getInfo() {
@@ -62,16 +53,16 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public ArrayList<NameFromSQL> getLessons(String[] name, String[] date) {
         SQLiteDatabase readableDatabase = this.getReadableDatabase();
         boolean where = false;
-        String sql = "SELECT NOS, Date, TP, Rating FROM history";
+        String sql = "SELECT NOS, Date, TP FROM history";
         if (name != null) {
-            sql += "WHERE";
+            sql += " WHERE ";
             where = true;
             int i = 0;
             for (String names :
                     name) {
-                sql += "NOS == " + names;
+                sql += "NOS == \"" + names + "\"" ;
                 if(name.length != 1 && i != name.length-1)
-                    sql += "AND";
+                    sql += " OR ";
                 i++;
             }
         }
@@ -80,7 +71,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         ArrayList<NameFromSQL> arrayList = new ArrayList<>();
         int position = cursor.getPosition();
         while (cursor.moveToPosition(position)) {
-            NameFromSQL nameFromSQL = new NameFromSQL(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3));
+            NameFromSQL nameFromSQL = new NameFromSQL(cursor.getString(0), cursor.getString(1), cursor.getString(2));
             arrayList.add(nameFromSQL);
             position++;
         }
@@ -93,7 +84,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     public void setLessons(String name) {
         SQLiteDatabase readableDatabase = this.getReadableDatabase();
-        readableDatabase.execSQL("INSERT INTO history (NOS, Date, TP, Rating) VALUES ('Математика','20.02.2019', 32, 35);");
+        readableDatabase.execSQL("INSERT INTO history (NOS, Date, TP, Rating) VALUES ('" + name +  "','20.02.2019', 32, 35);");
     }
 
     public TreeSet<String> getName() {
