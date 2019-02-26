@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MainActivity"
+    tools:showIn="@layout/app_bar_main">
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="10dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/butMth"
+                android:layout_width="0dp"
+                android:layout_height="116dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/mth"
+                android:contentDescription="Математика"
+                android:onClick="selectOnClick" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/butInf"
+                android:layout_width="0dp"
+                android:layout_height="116dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/inf"
+                android:clickable="false"
+                android:contentDescription="Информатика"
+                android:onClick="onClick"
+                android:textIsSelectable="true" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/butRus"
+                android:layout_width="0dp"
+                android:layout_height="116dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/rus"
+                android:contentDescription="Русский язык"
+                android:onClick="onClick" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="match_parent" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="10dp">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="10dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/butEng"
+                android:layout_width="0dp"
+                android:layout_height="116dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/eng"
+                android:contentDescription="Английский язык"
+                android:onClick="onClick" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/butGFS"
+                android:layout_width="0dp"
+                android:layout_height="116dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/gfc"
+                android:contentDescription="Остальные языки"
+                android:onClick="selectOnClick" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/butPhs"
+                android:layout_width="0dp"
+                android:layout_height="116dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/phs"
+                android:contentDescription="Физика"
+                android:onClick="onClick" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="10dp">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="10dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/butChm"
+                android:layout_width="0dp"
+                android:layout_height="116dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/chm"
+                android:contentDescription="Химия"
+                android:onClick="onClick" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/butBio"
+                android:layout_width="0dp"
+                android:layout_height="116dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/govno"
+                android:contentDescription="Биология"
+                android:onClick="onClick" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/butGeo"
+                android:layout_width="0dp"
+                android:layout_height="116dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/geo"
+                android:contentDescription="География"
+                android:onClick="onClick" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="10dp">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="10dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/butScl"
+                android:layout_width="0dp"
+                android:layout_height="116dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/scl"
+                android:contentDescription="Обществознанание"
+                android:onClick="onClick" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/butLtr"
+                android:layout_width="0dp"
+                android:layout_height="116dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/ltr"
+                android:contentDescription="Биология"
+                android:onClick="onClick" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/butHst"
+                android:layout_width="0dp"
+                android:layout_height="116dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/hst"
+                android:contentDescription="История"
+                android:onClick="onClick" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+    </TableLayout>
+
+</android.support.constraint.ConstraintLayout>

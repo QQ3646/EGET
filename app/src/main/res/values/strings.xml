@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">EGET</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string-array name="sortList">
+        <item>По дате</item>
+        <item>По проценту выполненных заданий</item>
+    </string-array>
+    <string-array name="nameOfSubjects">
+        <item>По дате</item>
+        <item>По проценту выполненных заданий</item>
+    </string-array>
+    <string name="MainMenu">Главная</string>
+    <string name="title_activity_tests_picker">tests_picker</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="BackButton"><![CDATA[<<]]></string>
+    <string name="NextButton"><![CDATA[>>]]></string>
+    <string name="title_activity_history">historyActivity</string>
+
+</resources>
