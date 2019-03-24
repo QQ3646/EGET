@@ -1,5 +1,6 @@
 package com.twodauns.eget;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -83,7 +84,8 @@ public class    TestsPicker extends AppCompatActivity {
         button.setTextSize(7f);
         counter++;
         button.setOnClickListener(view -> {
-            //дописать
+            Intent intent = new Intent(TestsPicker.this, Tester.class);
+            startActivity(intent);
         });
         button.setLayoutParams(params);
         row.addView(button);

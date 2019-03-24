@@ -35,20 +35,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-//        int[] id = {R.id.butBio, R.id.butChm, R.id.butEng, R.id.butGeo, R.id.butGFS, R.id.butHst,
-//                R.id.butInf, R.id.butRus, R.id.butPhs, R.id.butLtr, R.id.butMth, R.id.butScl};
-//        Button[] buttons = new Button[12];
-//        for (int i = 0; i < 12; i++) {
-//
-//        }
-//        int id[];
-//        id = new int[]{R.id.butBio, R.id.butChm, R.id.butEng, R.id.butGeo, R.id.butGFS, R.id.butHst,
-//                R.id.butInf, R.id.butRus, R.id.butPhs, R.id.butLtr, R.id.butMth, R.id.butScl};
-//        for (int i = 0; i < 12; i++) {
-//            Button buttons = findViewById(id[i]);
-//            //  buttons.setHeight((int)((findViewById(R.id.tableLayout).getHeight()-40-176)/20*0.01));
-//            buttons.setMaxHeight(1);
-//        }
 
         Toolbar toolbar = (Toolbar) findViewById(R. id.toolbar);
         setSupportActionBar(toolbar);
@@ -61,25 +47,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
-//    @Override
-//    public void onWindowFocusChanged(boolean hasFocus) {
-//        super.onWindowFocusChanged(hasFocus);
-//        int[] id;
-//        id = new int[]{R.id.butBio, R.id.butChm, R.id.butEng, R.id.butGeo, R.id.butGFS, R.id.butHst,
-//                R.id.butInf, R.id.butRus, R.id.butPhs, R.id.butLtr, R.id.butMth, R.id.butScl};
-//        for (int i = 0; i < 12; i++) {
-//            Button buttons = findViewById(id[i]);
-//          //  buttons.setHeight((int)((findViewById(R.id.tableLayout).getHeight()-40-176)/20*0.01));
-//            buttons.setHeight(1);
-//        }
-//    }
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        int d = (findViewById(R.id.tableLayout).getHeight()-40) / 4;
-//
-//    }
-//
+
     public void selectOnClick(View view) {
         Button button = (Button) view;
         CharSequence massage = null;
@@ -97,13 +65,6 @@ public class MainActivity extends AppCompatActivity
                 break;
             }
         }
-//        if(nSubject == "Математика") {
-//                massage = "Выберите уровень";
-//                nomination = new CharSequence[] {"Базовый уровень","Профильный уровень"};
-//        } else if(nSubject == "Остальные языки") {
-//                massage = "Выберите конкретный язык";
-//                nomination = new CharSequence[] {"Немецикий язык","Французкий язык","Испанский язык"};
-//        }
         onCreateDialog(nomination, massage);
     }
 

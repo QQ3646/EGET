@@ -1,15 +1,14 @@
 package com.twodauns.eget;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -21,32 +20,36 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TreeSet;
-
-import static java.security.AccessController.getContext;
+import java.util.zip.Inflater;
 
 public class historyActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     SQLiteHelper db;
-    Date[] date;
+    int[] date;
     ArrayList<String> names;
     TableLayout tableLayout;
     TableRow.LayoutParams params;
-    View vieww;
+    View subjectsPicker;
     boolean haveFiltered = false;
-    boolean dataWasSet = false;
+    boolean isDataWasSet[];
+    CalendarView calendar[];
     CheckBox[] checkBoxes;
+    String[] namesFromFiltr;
+    byte counter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +59,13 @@ public class historyActivity extends AppCompatActivity
         params = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.5f);
         db = new SQLiteHelper(this);
         setSupportActionBar(toolbar);
+        isDataWasSet = new boolean[]{false, false};
+        calendar = new CalendarView[]{null, null};
         tableLayout = findViewById(R.id.tableLay);
-        onUpdate();
+        update(null, null);
+        date = new int[2];
+        date[0] = 0;
+        date[1] = 0; //Даты на ноль
         FloatingActionButton floatingActionButton = findViewById(R.id.floatingActionButton);
         floatingActionButton.setOnClickListener(view -> {
             EditText editText = new EditText(this);
@@ -68,7 +76,7 @@ public class historyActivity extends AppCompatActivity
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             db.setLessons(editText.getText().toString());
-                            onUpdate();
+                            update(null, null);
                         }
                     })
                     .setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
@@ -90,41 +98,30 @@ public class historyActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    public void onClick(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        // Get the layout inflater
-        LayoutInflater inflater = this.getLayoutInflater();
-        View view1 = inflater.inflate(R.layout.date_alert, null);
-        builder.setView(inflater.inflate(R.layout.date_alert, null))
-                .setPositiveButton("Применить", (dialog, id1) -> {
-                    builder.create();
-                    dataWasSet = true;
-                })
-                .setNegativeButton("Отмена", (dialog, id1) -> dialog.cancel());
-
-        builder.show();
-    }
-
-    public void onUpdate(String[] names) {
+    public void update(String[] names, int[] dates) {
         tableLayout.removeAllViews();
-        ArrayList<SQLiteHelper.NameFromSQL> nameFromSQLS;
-        if (names == null)
-            nameFromSQLS = db.getLessons();
-        else nameFromSQLS = db.getLessons(names, null);
+        ArrayList<SQLiteHelper.NameFromSQL> nameFromSQLS = db.getLessons(names, dates);
         for (SQLiteHelper.NameFromSQL name :
                 nameFromSQLS) {
-            Button button = new Button(this);
-            button.setText(name.Date + "      " + name.NOS + "        " + name.TP);
-            button.setTextSize(20f);
-            button.setOnClickListener(view -> {
+            Integer fakeDate = name.Date;
+            SimpleDateFormat originalFormat = new SimpleDateFormat("yyyyMMdd");
+            try {
+                Date date = originalFormat.parse(fakeDate.toString());
+                Button button = new Button(this);
+                button.setText(new SimpleDateFormat("dd.MM.yyyy").format(date) + "      " + name.NOS + "        " + name.TP);
+                button.setTextSize(18f);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
-            });
-            tableLayout.addView(button);
+                    }
+                });
+                tableLayout.addView(button);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
-    }
 
-    public void onUpdate() {
-        onUpdate(null);
     }
 
     @Override
@@ -143,6 +140,7 @@ public class historyActivity extends AppCompatActivity
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -150,41 +148,13 @@ public class historyActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         //noinspection SimplifiableIfStatemento
+
         if (id == R.id.action_sort) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            // Get the layout inflater
-//            LayoutInflater inflater = this.getLayoutInflater();
-//            vieww = inflater.inflate(R.layout.alertfilter, null);
-////            TableRow tableRow = vieww.findViewById(R.id.tableRow2);
-////            Button button = new Button(this);
-////            button.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.01f));
-////            button.setOnClickListener(this::onClick);
-////            button.setText("Настроить дату");
-////            Thread thread = new Thread(() -> {
-////                runOnUiThread(() -> {
-////                    if (dataWasSet) {
-////                        button.setBackgroundColor(getResources().getColor(R.color.datePlus));
-////                    } else {
-////                        button.setBackgroundColor(getResources().getColor(R.color.dateMinus));
-////                    }
-////                });
-////            });
-////            thread.run();
-//            //tableRow.addView(button, 1);
-//            ImageView button = vieww.findViewById(R.id.imageView2);
-//            button.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    if(!changeImage)
-//                        button.setImageDrawable(getResources().getDrawable(R.drawable.baseline_keyboard_arrow_up_24));
-//                    else button.setImageDrawable(getResources().getDrawable(R.drawable.baseline_keyboard_arrow_down_24));
-//                }
-//            });
-//            LinearLayout linearLayout = vieww.findViewById(R.id.linearLayout);
             int j = 0;
             LayoutInflater inflater = this.getLayoutInflater();
-            vieww = inflater.inflate(R.layout.alertfilter, null);
-            LinearLayout listOfLessons = vieww.findViewById(R.id.listOfLessons);
+            subjectsPicker = inflater.inflate(R.layout.alertfilter, null);
+            LinearLayout listOfLessons = subjectsPicker.findViewById(R.id.listOfLessons);
             if (!haveFiltered) {
                 TreeSet<String> nameSet = db.getName();
                 checkBoxes = new CheckBox[nameSet.size()];
@@ -204,16 +174,7 @@ public class historyActivity extends AppCompatActivity
                     i++;
                 }
             }
-//            else {
-//                listOfLessons.removeAllViews();
-//                for (CheckBox name :
-//                        checkBoxes) {
-//                    listOfLessons.addView(name);
-//                }
-//            }
-//            scrollView.removeAllViews();
-//            scrollView.addView(listOfLessons);
-            builder.setView(vieww)
+            builder.setView(subjectsPicker)
                     .setPositiveButton("Применить", (dialog, id1) -> {
                         names = new ArrayList<>();
                         for (CheckBox checkBox :
@@ -224,16 +185,16 @@ public class historyActivity extends AppCompatActivity
                         }
                         if (names.size() != 0) {
                             int k = 0;
-                            String[] namesFromFiltr = new String[names.size()];
+                            namesFromFiltr = new String[names.size()];
                             for (String name :
                                     names) {
                                 namesFromFiltr[k] = name;
                                 k++;
                             }
-                            onUpdate(namesFromFiltr);
+                            update(namesFromFiltr, null);
                             haveFiltered = true;
                         } else {
-                            onUpdate();
+                            update(null, null);
                             names.clear();
                             haveFiltered = false;
                         }
@@ -241,7 +202,7 @@ public class historyActivity extends AppCompatActivity
                     .setNegativeButton("Отмена", (dialog, id1) -> dialog.cancel());
             if (haveFiltered) {
                 builder.setNeutralButton("Сбросить", ((dialogInterface, i) -> {
-                    onUpdate();
+                    update(null, null);
                     names.clear();
                     haveFiltered = false;
                 }));
@@ -249,11 +210,46 @@ public class historyActivity extends AppCompatActivity
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
             return false;
-        }
+        } else if (id == R.id.Ot || id == R.id.doo) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            LayoutInflater inflater = this.getLayoutInflater();
+            View dateAlert = inflater.inflate(R.layout.date_alert, null);
+            TableRow calendarViewTR = dateAlert.findViewById(R.id.anotherTR);
+            if (id == R.id.Ot) counter = 0;
+            else counter = 1;
+            if (!isDataWasSet[counter]) {
+                calendar[counter] = new CalendarView(this);
+                calendar[counter].setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                    @Override
+                    public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
+                        date[counter] = getDate(i, i1, i2);
+                    }
+                });
+                calendarViewTR.addView(calendar[counter], 1);
+            } else {
+                ((TableRow) calendar[counter].getParent()).removeView(calendar[counter]);
+                calendarViewTR.addView(calendar[counter], 1);
+            }
+            builder.setView(dateAlert)
+                    .setNegativeButton("Отмена", (dialogInterface, i) -> {
+                        date[counter] = 0;
+                        dialogInterface.cancel();
+                    })
+                    .setPositiveButton("Применить", (dialogInterface, i) -> {
+                        update(namesFromFiltr, date);
+                        isDataWasSet[counter] = true;
+                    });
+            if (isDataWasSet[counter]) {
+                builder.setNeutralButton("Сбросить", (dialogInterface, i) -> {
+                    update(null, null);
+                    isDataWasSet[counter] = false;
+                });
+            }
+            builder.show();
 
+        }
         return super.onOptionsItemSelected(item);
     }
-
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -269,5 +265,12 @@ public class historyActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public int getDate(int year, int month, int day) {
+        Date date = new Date(year - 1900, month, day);
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyyMMdd");
+        Integer integer = Integer.parseInt(originalFormat.format(date));
+        return integer;
     }
 }

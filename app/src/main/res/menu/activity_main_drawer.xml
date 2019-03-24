@@ -6,10 +6,12 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/history"
+            android:checkable="false"
             android:icon="@drawable/baseline_history_black_18dp"
             android:title="История" />
         <item
             android:id="@+id/main"
+            android:checkable="false"
             android:icon="@drawable/baseline_star_rate_black_18dp"
             android:title="@string/MainMenu" />
     </group>

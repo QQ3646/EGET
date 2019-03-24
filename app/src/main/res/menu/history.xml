@@ -10,14 +10,18 @@
         android:title="Сортировка"
         app:showAsAction="ifRoom"></item>
     <item
-        android:icon="@drawable/baseline_calendar_today_24"
+        android:icon="@drawable/baseline_calendar_today_black_18dp"
         android:orderInCategory="300"
         android:title="Item"
-        app:showAsAction="ifRoom" >
+        app:showAsAction="ifRoom">
         <menu>
 
-            <item android:title="От" />
-            <item android:title="До" />
+            <item
+                android:id="@+id/Ot"
+                android:title="От" />
+            <item
+                android:id="@+id/doo"
+                android:title="До" />
         </menu>
-        </item>
+    </item>
 </menu>
