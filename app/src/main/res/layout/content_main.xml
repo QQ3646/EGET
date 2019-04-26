@@ -215,7 +215,7 @@
                 android:layout_height="116dp"
                 android:layout_weight="0.25"
                 android:background="@drawable/scl"
-                android:contentDescription="Обществознанание"
+                android:contentDescription="Обществознание"
                 android:onClick="onClick" />
 
             <Space
@@ -228,7 +228,7 @@
                 android:layout_height="116dp"
                 android:layout_weight="0.25"
                 android:background="@drawable/ltr"
-                android:contentDescription="Биология"
+                android:contentDescription="Литература"
                 android:onClick="onClick" />
 
             <Space

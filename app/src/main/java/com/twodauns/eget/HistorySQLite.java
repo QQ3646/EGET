@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.TreeSet;
 
-public class SQLiteHelper extends SQLiteOpenHelper {
+public class HistorySQLite extends SQLiteOpenHelper {
     private Context ctn;
 
-    public SQLiteHelper(Context context) {
+    public HistorySQLite(Context context) {
         super(context, "database.db", null, 1);
         ctn = context;
     }
@@ -89,9 +89,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         return arrayList;
     }
 
-    public void setLessons(String name) {
+    public void setLesson(String name, int date) {
         SQLiteDatabase readableDatabase = this.getReadableDatabase();
-        readableDatabase.execSQL("INSERT INTO history (NOS, Date, TP) VALUES ('" + name + "','20190301', 32);");
+        readableDatabase.execSQL("INSERT INTO history (NOS, Date, TP) VALUES ('" + name + "'," + date + ", 32);");
     }
 
     public TreeSet<String> getName() {

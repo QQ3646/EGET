@@ -56,12 +56,12 @@ public class MainActivity extends AppCompatActivity
         switch (nSubject) {
             case "Математика":{
                 massage = "Выберите уровень";
-                nomination = new CharSequence[] {"Базовый уровень","Профильный уровень"};
+                nomination = new CharSequence[] {"Математика: Базовый уровень","Математика: профильный уровень"};
                 break;
             }
             case "Остальные языки": {
                 massage = "Выберите конкретный язык";
-                nomination = new CharSequence[] {"Немецикий язык","Французкий язык","Испанский язык"};
+                nomination = new CharSequence[] {"Немецкий язык","Французкий язык","Испанский язык"};
                 break;
             }
         }
@@ -82,11 +82,12 @@ public class MainActivity extends AppCompatActivity
                 .setItems(nomination, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        CharSequence[] newNom;
-                        if(massage == "Выберите уровень") {
-                            newNom = new CharSequence[]{"Математика: базовый уровень", "Математика: профильный уровень"};
-                            contentDescription = newNom[i];
-                        } else contentDescription = nomination[i];
+                     //   CharSequence[] newNom;
+//                        if(massage == "Выберите уровень") {
+//                            newNom = new CharSequence[]{"Математика: базовый уровень", "Математика: профильный уровень"};
+//                            contentDescription = newNom[i];
+//                        } else
+                            contentDescription = nomination[i];
 
                         Intent intent = new Intent(MainActivity.this, TestsPicker.class);
                         startActivity(intent);

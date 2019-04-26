@@ -2,8 +2,6 @@ package com.twodauns.eget;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -13,8 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
-import java.lang.ref.SoftReference;
 
 public class    TestsPicker extends AppCompatActivity {
     int counter = 1;
@@ -84,7 +80,7 @@ public class    TestsPicker extends AppCompatActivity {
         button.setTextSize(7f);
         counter++;
         button.setOnClickListener(view -> {
-            Intent intent = new Intent(TestsPicker.this, Tester.class);
+            Intent intent = new Intent(TestsPicker.this, tester.class);
             startActivity(intent);
         });
         button.setLayoutParams(params);

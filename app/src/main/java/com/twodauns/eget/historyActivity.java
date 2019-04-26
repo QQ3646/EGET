@@ -1,7 +1,6 @@
 package com.twodauns.eget;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -22,7 +21,6 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -31,14 +29,12 @@ import android.widget.TableRow;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.TreeSet;
-import java.util.zip.Inflater;
 
 public class historyActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    SQLiteHelper db;
+    HistorySQLite db;
     int[] date;
     ArrayList<String> names;
     TableLayout tableLayout;
@@ -57,7 +53,7 @@ public class historyActivity extends AppCompatActivity
         setContentView(R.layout.activity_history);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         params = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.5f);
-        db = new SQLiteHelper(this);
+        db = new HistorySQLite(this);
         setSupportActionBar(toolbar);
         isDataWasSet = new boolean[]{false, false};
         calendar = new CalendarView[]{null, null};
@@ -66,28 +62,6 @@ public class historyActivity extends AppCompatActivity
         date = new int[2];
         date[0] = 0;
         date[1] = 0; //Даты на ноль
-        FloatingActionButton floatingActionButton = findViewById(R.id.floatingActionButton);
-        floatingActionButton.setOnClickListener(view -> {
-            EditText editText = new EditText(this);
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setView(editText)
-                    .setTitle("Введи что-то")
-                    .setPositiveButton("Добавить", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            db.setLessons(editText.getText().toString());
-                            update(null, null);
-                        }
-                    })
-                    .setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.cancel();
-                        }
-                    });
-            builder.show();
-
-        });
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -100,21 +74,21 @@ public class historyActivity extends AppCompatActivity
 
     public void update(String[] names, int[] dates) {
         tableLayout.removeAllViews();
-        ArrayList<SQLiteHelper.NameFromSQL> nameFromSQLS = db.getLessons(names, dates);
-        for (SQLiteHelper.NameFromSQL name :
+        ArrayList<HistorySQLite.NameFromSQL> nameFromSQLS = db.getLessons(names, dates);
+        for (HistorySQLite.NameFromSQL name :
                 nameFromSQLS) {
             Integer fakeDate = name.Date;
             SimpleDateFormat originalFormat = new SimpleDateFormat("yyyyMMdd");
             try {
                 Date date = originalFormat.parse(fakeDate.toString());
                 Button button = new Button(this);
-                button.setText(new SimpleDateFormat("dd.MM.yyyy").format(date) + "      " + name.NOS + "        " + name.TP);
-                button.setTextSize(18f);
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                button.setText(new SimpleDateFormat("dd.MM.yyyy").format(date) + "    " + name.NOS + "    " + name.TP);
+                if (name.NOS.contains("Математика"))
+                    button.setTextSize(12.5f);
+                else
+                    button.setTextSize(18f);
+                button.setOnClickListener(view -> {
 
-                    }
                 });
                 tableLayout.addView(button);
             } catch (ParseException e) {
@@ -140,7 +114,7 @@ public class historyActivity extends AppCompatActivity
         return true;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+    //@RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -217,6 +191,7 @@ public class historyActivity extends AppCompatActivity
             TableRow calendarViewTR = dateAlert.findViewById(R.id.anotherTR);
             if (id == R.id.Ot) counter = 0;
             else counter = 1;
+
             if (!isDataWasSet[counter]) {
                 calendar[counter] = new CalendarView(this);
                 calendar[counter].setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -241,7 +216,8 @@ public class historyActivity extends AppCompatActivity
                     });
             if (isDataWasSet[counter]) {
                 builder.setNeutralButton("Сбросить", (dialogInterface, i) -> {
-                    update(null, null);
+                    date[counter] = 0;
+                    update(namesFromFiltr, null);
                     isDataWasSet[counter] = false;
                 });
             }
@@ -267,10 +243,38 @@ public class historyActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (date[0] != 0) {
+            try {
+                setTitle(menu.findItem(R.id.Ot),"От: " + new SimpleDateFormat("dd.MM.yyyy").format(new SimpleDateFormat("yyyyMMdd").parse(String.valueOf(date[0]))));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else {
+            setTitle(menu.findItem(R.id.Ot),"От");
+        }
+        if (date[1] != 0) {
+            try {
+                setTitle(menu.findItem(R.id.doo), "До: " + new SimpleDateFormat("dd.MM.yyyy").format(new SimpleDateFormat("yyyyMMdd").parse(String.valueOf(date[1]))));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else {
+            setTitle(menu.findItem(R.id.doo),"До");;
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
     public int getDate(int year, int month, int day) {
         Date date = new Date(year - 1900, month, day);
         SimpleDateFormat originalFormat = new SimpleDateFormat("yyyyMMdd");
         Integer integer = Integer.parseInt(originalFormat.format(date));
         return integer;
+    }
+
+    public void setTitle(MenuItem menuItem, String name){
+        menuItem.setTitle(name);
+        invalidateOptionsMenu();
     }
 }
