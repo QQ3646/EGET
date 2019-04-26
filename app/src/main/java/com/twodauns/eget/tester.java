@@ -36,7 +36,7 @@ public class tester extends AppCompatActivity {
 
     boolean oneQuestion[];
 
-    Question[] questions;
+    static Question[] questions;
 
     Thread timer;
 
@@ -94,16 +94,19 @@ public class tester extends AppCompatActivity {
         boolean ready = false;
         answers = new String[notC];
         int n = 0;
+        boolean[] b = new boolean[3];
         try {
             XmlPullParser parser = getResources().getXml(R.xml.obsh2);
-            while (n < 1) {
+            while (n < stringOfNames.length) {
                 if (parser.getEventType() == XmlPullParser.START_TAG
                         && parser.getName().contains("sect1")) {
                     parser.next();
                     while (!(parser.getEventType() == XmlPullParser.END_TAG &&
                             parser.getName().contains("sect1"))) {
                         if (parser.getEventType() == XmlPullParser.START_TAG
-                                && parser.getName().contains("sect2")) {
+                                && parser.getName().contains("sect2")
+                                && parser.getAttributeValue(0).contains("body")) {
+                            b[0] = false;
                             TableLayout tableLayout = new TableLayout(this);
                             while (!(parser.getEventType() == XmlPullParser.END_TAG &&
                                     parser.getName().contains("sect2"))) {
@@ -112,6 +115,7 @@ public class tester extends AppCompatActivity {
                                     textView.setText(parser.nextText());
                                     tableLayout.addView(textView);
                                 } else if (parser.getName().contains("informaltable")) {
+                                    TableLayout tableLayout1 = new TableLayout(this);
                                     while (!(parser.getEventType() == XmlPullParser.END_TAG &&
                                             parser.getName().contains("informaltable"))) {
                                         if (parser.getName().contains("row")) {
@@ -119,12 +123,33 @@ public class tester extends AppCompatActivity {
                                             tableRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
                                             while (!(parser.getEventType() == XmlPullParser.END_TAG &&
                                                     parser.getName().contains("row"))) {
-                                                if (parser.getName().contains("para")) {
+                                                if (parser.getName().contains("entry")) {
                                                     TextView textView = new TextView(this);
-                                                    textView.setText(" " + parser.nextText());
-                                                    TableRow.LayoutParams params = new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 0.5f);
+                                                    String string = new String();
+                                                    TableRow.LayoutParams params = null;
+                                                    while (!(parser.getEventType() == XmlPullParser.END_TAG &&
+                                                            parser.getName().contains("entry"))) {
+                                                        if(parser.getName().contains("para")){
+                                                            CharSequence str;
+                                                            str = parser.nextText();
+                                                            if(str.equals(" ") || str.equals("  ")){
+                                                                params = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.1f);
+                                                            } else {
+                                                                params = new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 0.5f);
+                                                                if(!((String) str).toUpperCase().equals(str)) {
+
+                                                                    string += str + "\n";
+                                                                }
+                                                                else {
+                                                                    textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                                                                    string += str;
+                                                                }
+                                                            }
+                                                        }
+                                                       parser.next();
+                                                    }
+                                                    textView.setText(string);
                                                     params.setMargins(1, 1, 1, 1);
-                                                    textView.setGravity(Gravity.CENTER_HORIZONTAL);
                                                     textView.setLayoutParams(params);
                                                     textView.setBackgroundResource(R.drawable.border);
                                                     tableRow.addView(textView);
@@ -132,21 +157,51 @@ public class tester extends AppCompatActivity {
                                                 parser.next();
                                             }
                                             if (tableRow.getChildCount() != 0) {
-                                                tableLayout.addView(tableRow);
+                                                tableLayout1.addView(tableRow);
                                             }
                                         }
                                         parser.next();
                                     }
-                                  //  parser.next();
+                                    tableLayout.addView(tableLayout1);
                                 }
                                 parser.next();
                             }
                             questions[n] = new Question(tableLayout);
-                            n++;
+                            b[0] = true;
                             //   parser.next();
                         } else if (parser.getEventType() == XmlPullParser.START_TAG
+                                && parser.getName().contains("sect2")
                                 && parser.getAttributeValue(0).contains("sol")) {
+                            b[1] = false;
                             TableLayout sol = new TableLayout(this);
+                            while (!(parser.getEventType() == XmlPullParser.END_TAG &&
+                                    parser.getName().contains("sect2"))) {
+                                if(parser.getName().contains("para")){
+                                    TextView textView = new TextView(this);
+                                    textView.setText(parser.nextText());
+
+                                    sol.addView(textView);
+                                }
+                                parser.next();
+                            }
+                            sol.removeViewAt(sol.getChildCount()-1);
+                            questions[n].solve = sol;
+                            b[1] = true;
+                        } else if(parser.getEventType() == XmlPullParser.START_TAG
+                                && parser.getName().contains("para")) {
+                            b[2] = false;
+                            String str = parser.nextText();
+                            if (str != "") {
+                                str = str.split(": ")[1];
+                                questions[n].setAnswer(str.split("|"));
+                                b[2] = true;
+                            }
+                        }
+                        if(b[1] && b[0] && b[2]){
+                            n++;
+                            b[1] = false;
+                            b[0] = false;
+                            b[2] = false;
                         }
                         parser.next();
                     }
@@ -182,8 +237,8 @@ public class tester extends AppCompatActivity {
                 } catch (InterruptedException ex) {
                 }
             }
-            if (!isAlreadyEnded)
-                endOfTest();
+//            if (!isAlreadyEnded)
+//                endOfTest();
         });
         timer.start();
     }
@@ -237,8 +292,10 @@ public class tester extends AppCompatActivity {
 
         public TableLayout solve;
 
-        public void setSolve(TableLayout solve) {
-            this.solve = solve;
+        CharSequence[] answer;
+
+        public void setAnswer(CharSequence[] answer) {
+            this.answer = answer;
         }
 
         Question(TableLayout question) {
@@ -290,16 +347,9 @@ public class tester extends AppCompatActivity {
     public void endOfTest() {
         timer.interrupt();
         isAlreadyEnded = true;
+
         Intent intent = new Intent(this, end_of_test.class);
         startActivity(intent);
     }
 
-    public boolean getInfo() {
-        int a = 0;
-        for (boolean b :
-                oneQuestion) {
-            if (!b) return true;
-        }
-        return false;
-    }
 }
