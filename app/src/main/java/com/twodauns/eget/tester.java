@@ -130,6 +130,7 @@ public class tester extends AppCompatActivity {
                                                     while (!(parser.getEventType() == XmlPullParser.END_TAG &&
                                                             parser.getName().contains("entry"))) {
                                                         if(parser.getName().contains("para")){
+                                                            boolean b1 = false;
                                                             CharSequence str;
                                                             str = parser.nextText();
                                                             if(str.equals(" ") || str.equals("  ")){
@@ -141,8 +142,14 @@ public class tester extends AppCompatActivity {
                                                                     string += str + "\n";
                                                                 }
                                                                 else {
+                                                                    if(b1){
+                                                                        string += "\n" + str;
+                                                                    } else
+                                                                        string += str;
                                                                     textView.setGravity(Gravity.CENTER_HORIZONTAL);
-                                                                    string += str;
+
+                                                                    b1 = true;
+
                                                                 }
                                                             }
                                                         }
@@ -237,7 +244,7 @@ public class tester extends AppCompatActivity {
                 } catch (InterruptedException ex) {
                 }
             }
-//            if (!isAlreadyEnded)
+//            if (!isAlreadyEnded)      ВЕРНИ НА МЕСТО БЛЯТЬ
 //                endOfTest();
         });
         timer.start();
@@ -292,10 +299,11 @@ public class tester extends AppCompatActivity {
 
         public TableLayout solve;
 
-        CharSequence[] answer;
+        CharSequence[] correctAnswer;
+
 
         public void setAnswer(CharSequence[] answer) {
-            this.answer = answer;
+            this.correctAnswer = answer;
         }
 
         Question(TableLayout question) {
@@ -324,8 +332,9 @@ public class tester extends AppCompatActivity {
 
     public void changeQuestion(String number) {
         if (!answer.getText().toString().equals(""))
-            answers[Integer.parseInt(selectButton.getText().toString()) - 1] = answer.getText().toString();
-
+            answers[Integer.parseInt(selectButton.getText().toString()) - 2] = answer.getText().toString();
+      //  if(answers[Integer.parseInt(selectButton.getText().toString()) - 1] != null)
+        answer.setText(answers[Integer.parseInt(selectButton.getText().toString()) - 1]);
 
         selectButton.setText(number);
         toolbar.setSubtitle(stringOfNames[Integer.parseInt(number) - 1]);
