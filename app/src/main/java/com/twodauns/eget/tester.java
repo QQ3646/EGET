@@ -3,7 +3,6 @@ package com.twodauns.eget;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,11 +16,11 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 import org.xmlpull.v1.XmlPullParser;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class tester extends AppCompatActivity {
@@ -120,6 +119,7 @@ public class tester extends AppCompatActivity {
                                     while (!(parser.getEventType() == XmlPullParser.END_TAG &&
                                             parser.getName().contains("informaltable"))) {
                                         if (parser.getName().contains("row")) {
+                                            int plusOneRow = 0;
                                             TableRow tableRow = new TableRow(this);
                                             tableRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
                                             while (!(parser.getEventType() == XmlPullParser.END_TAG &&
@@ -129,6 +129,7 @@ public class tester extends AppCompatActivity {
                                                     String s = new String();
                                                     boolean b1 = false;
                                                     boolean b2 = false;
+
                                                     TableRow.LayoutParams params = null;
                                                     while (!(parser.getEventType() == XmlPullParser.END_TAG &&
                                                             parser.getName().contains("entry"))) {
@@ -157,7 +158,7 @@ public class tester extends AppCompatActivity {
                                                         parser.next();
                                                     }
                                                     if (b1) {
-                                                        s = s.substring(0, (s.length()) - 2);
+                                                        s = s.substring(0, (s.length()) - 1);
                                                     }
                                                     if (!b2) {
                                                         textView.setText(s);
@@ -166,11 +167,30 @@ public class tester extends AppCompatActivity {
                                                         textView.setBackgroundResource(R.drawable.border);
                                                         tableRow.addView(textView);
                                                     }
+                                                    if (s.length() == 1 &&
+                                                            ((s.toCharArray()[0] >= 'A' && s.toCharArray()[0] <= 'Z') || ((s.toCharArray()[0] >= 'А' && s.toCharArray()[0] <= 'Я')))) {
+                                                        plusOneRow++;
+                                                    }
                                                 }
                                                 parser.next();
                                             }
+
                                             if (tableRow.getChildCount() != 0) {
                                                 tableLayout1.addView(tableRow);
+                                            }
+                                            if (plusOneRow != 0) {
+                                                TableRow anotherTableRow = new TableRow(this);
+                                                for (int i = 0; i < plusOneRow; i++) {
+
+                                                    TextView textView = new TextView(this);
+                                                    TableRow.LayoutParams params = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.1f);
+                                                    textView.setText(" ");
+                                                    params.setMargins(1, 1, 1, 1);
+                                                    textView.setLayoutParams(params);
+                                                    textView.setBackgroundResource(R.drawable.border);
+                                                    anotherTableRow.addView(textView);
+                                                }
+                                                tableLayout1.addView(anotherTableRow);
                                             }
                                         }
                                         parser.next();
@@ -206,7 +226,12 @@ public class tester extends AppCompatActivity {
                             String str = parser.nextText();
                             if (str != "") {
                                 str = str.split(": ")[1];
-                                questions[n].setAnswer(str.split("|"));
+                                for (String s:
+                                     str.split(String.valueOf("@"))) {
+                                    if(!s.isEmpty()){
+                                        questions[n].addAnswer(s);
+                                    }
+                                }
                                 b[2] = true;
                             }
                         }
@@ -305,11 +330,11 @@ public class tester extends AppCompatActivity {
 
         public TableLayout solve;
 
-        CharSequence[] correctAnswer;
+        ArrayList<CharSequence> correctAnswer = new ArrayList<>();
 
 
-        public void setAnswer(CharSequence[] answer) {
-            this.correctAnswer = answer;
+        public void addAnswer(CharSequence answer) {
+            this.correctAnswer.add(answer);
         }
 
         Question(TableLayout question) {
