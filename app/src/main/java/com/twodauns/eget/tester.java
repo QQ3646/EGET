@@ -22,7 +22,6 @@ import org.xmlpull.v1.XmlPullParser;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class tester extends AppCompatActivity {
@@ -117,7 +116,7 @@ public class tester extends AppCompatActivity {
                                     tableLayout.addView(textView);
                                 } else if (parser.getName().contains("informaltable")) {
                                     TableLayout tableLayout1 = new TableLayout(this);
-                                    tableLayout1.setColumnShrinkable(1,true);
+                                    tableLayout1.setColumnShrinkable(1, true);
                                     while (!(parser.getEventType() == XmlPullParser.END_TAG &&
                                             parser.getName().contains("informaltable"))) {
                                         if (parser.getName().contains("row")) {
@@ -127,46 +126,46 @@ public class tester extends AppCompatActivity {
                                                     parser.getName().contains("row"))) {
                                                 if (parser.getName().contains("entry")) {
                                                     TextView textView = new TextView(this);
-                                                    ArrayList<CharSequence> string = new ArrayList<>();
+                                                    String s = new String();
+                                                    boolean b1 = false;
+                                                    boolean b2 = false;
                                                     TableRow.LayoutParams params = null;
                                                     while (!(parser.getEventType() == XmlPullParser.END_TAG &&
                                                             parser.getName().contains("entry"))) {
-                                                        if(parser.getName().contains("para")){
-                                                            boolean b1 = false;
-                                                            String str = new String();
+                                                        if (parser.getName().contains("para")) {
+
+                                                            CharSequence str;
                                                             str = parser.nextText();
-                                                            if(str.equals(" ") || str.equals("  ")){
+                                                            if (str.equals(" ") || str.equals("  ")) {
                                                                 params = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.1f);
+                                                                b2 = true;
                                                             } else {
                                                                 params = new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 0.5f);
-                                                                if(!((String) str).toUpperCase().equals(str)) {
+                                                                if (!((String) str).toUpperCase().equals(str)) {
 
-                                                                    string.add(str + "\n");
-                                                                }
-                                                                else {
+                                                                    s += str + "\n";
+                                                                    b1 = true;
+                                                                } else {
 //                                                                    if(b1){
-//                                                                        string += "\n" + str;
+//                                                                        s += "\n" + str;
 //                                                                    } else
-                                                                    string.add(str);
-                                                                      //  string += str;
+                                                                    s += str;
                                                                     textView.setGravity(Gravity.CENTER_HORIZONTAL);
-//
-//                                                                    b1 = true;
-
                                                                 }
                                                             }
                                                         }
-                                                       parser.next();
+                                                        parser.next();
                                                     }
-                                                    for (CharSequence chars:
-                                                         string) {
-                                                        textView.setText(chars);
+                                                    if (b1) {
+                                                        s = s.substring(0, (s.length()) - 2);
+                                                    }
+                                                    if (!b2) {
+                                                        textView.setText(s);
                                                         params.setMargins(1, 1, 1, 1);
                                                         textView.setLayoutParams(params);
                                                         textView.setBackgroundResource(R.drawable.border);
                                                         tableRow.addView(textView);
                                                     }
-
                                                 }
                                                 parser.next();
                                             }
@@ -190,7 +189,7 @@ public class tester extends AppCompatActivity {
                             TableLayout sol = new TableLayout(this);
                             while (!(parser.getEventType() == XmlPullParser.END_TAG &&
                                     parser.getName().contains("sect2"))) {
-                                if(parser.getName().contains("para")){
+                                if (parser.getName().contains("para")) {
                                     TextView textView = new TextView(this);
                                     textView.setText(parser.nextText());
 
@@ -198,10 +197,10 @@ public class tester extends AppCompatActivity {
                                 }
                                 parser.next();
                             }
-                            sol.removeViewAt(sol.getChildCount()-1);
+                            sol.removeViewAt(sol.getChildCount() - 1);
                             questions[n].solve = sol;
                             b[1] = true;
-                        } else if(parser.getEventType() == XmlPullParser.START_TAG
+                        } else if (parser.getEventType() == XmlPullParser.START_TAG
                                 && parser.getName().contains("para")) {
                             b[2] = false;
                             String str = parser.nextText();
@@ -211,7 +210,7 @@ public class tester extends AppCompatActivity {
                                 b[2] = true;
                             }
                         }
-                        if(b[1] && b[0] && b[2]){
+                        if (b[1] && b[0] && b[2]) {
                             n++;
                             b[1] = false;
                             b[0] = false;
@@ -340,7 +339,7 @@ public class tester extends AppCompatActivity {
     public void changeQuestion(String number) {
         if (!answer.getText().toString().equals(""))
             answers[Integer.parseInt(selectButton.getText().toString()) - 2] = answer.getText().toString();
-      //  if(answers[Integer.parseInt(selectButton.getText().toString()) - 1] != null)
+        //  if(answers[Integer.parseInt(selectButton.getText().toString()) - 1] != null)
         answer.setText(answers[Integer.parseInt(selectButton.getText().toString()) - 1]);
 
         selectButton.setText(number);
