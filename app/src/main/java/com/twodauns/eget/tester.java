@@ -22,6 +22,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class tester extends AppCompatActivity {
@@ -116,6 +117,7 @@ public class tester extends AppCompatActivity {
                                     tableLayout.addView(textView);
                                 } else if (parser.getName().contains("informaltable")) {
                                     TableLayout tableLayout1 = new TableLayout(this);
+                                    tableLayout1.setColumnShrinkable(1,true);
                                     while (!(parser.getEventType() == XmlPullParser.END_TAG &&
                                             parser.getName().contains("informaltable"))) {
                                         if (parser.getName().contains("row")) {
@@ -125,13 +127,13 @@ public class tester extends AppCompatActivity {
                                                     parser.getName().contains("row"))) {
                                                 if (parser.getName().contains("entry")) {
                                                     TextView textView = new TextView(this);
-                                                    String string = new String();
+                                                    ArrayList<CharSequence> string = new ArrayList<>();
                                                     TableRow.LayoutParams params = null;
                                                     while (!(parser.getEventType() == XmlPullParser.END_TAG &&
                                                             parser.getName().contains("entry"))) {
                                                         if(parser.getName().contains("para")){
                                                             boolean b1 = false;
-                                                            CharSequence str;
+                                                            String str = new String();
                                                             str = parser.nextText();
                                                             if(str.equals(" ") || str.equals("  ")){
                                                                 params = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.1f);
@@ -139,27 +141,32 @@ public class tester extends AppCompatActivity {
                                                                 params = new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 0.5f);
                                                                 if(!((String) str).toUpperCase().equals(str)) {
 
-                                                                    string += str + "\n";
+                                                                    string.add(str + "\n");
                                                                 }
                                                                 else {
-                                                                    if(b1){
-                                                                        string += "\n" + str;
-                                                                    } else
-                                                                        string += str;
+//                                                                    if(b1){
+//                                                                        string += "\n" + str;
+//                                                                    } else
+                                                                    string.add(str);
+                                                                      //  string += str;
                                                                     textView.setGravity(Gravity.CENTER_HORIZONTAL);
-
-                                                                    b1 = true;
+//
+//                                                                    b1 = true;
 
                                                                 }
                                                             }
                                                         }
                                                        parser.next();
                                                     }
-                                                    textView.setText(string);
-                                                    params.setMargins(1, 1, 1, 1);
-                                                    textView.setLayoutParams(params);
-                                                    textView.setBackgroundResource(R.drawable.border);
-                                                    tableRow.addView(textView);
+                                                    for (CharSequence chars:
+                                                         string) {
+                                                        textView.setText(chars);
+                                                        params.setMargins(1, 1, 1, 1);
+                                                        textView.setLayoutParams(params);
+                                                        textView.setBackgroundResource(R.drawable.border);
+                                                        tableRow.addView(textView);
+                                                    }
+
                                                 }
                                                 parser.next();
                                             }
