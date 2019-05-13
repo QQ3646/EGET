@@ -24,5 +24,6 @@
     <string name="NextButton"><![CDATA[>>]]></string>
     <string name="title_activity_history">historyActivity</string>
     <string name="title_activity_end_of_test">end_of_test</string>
+    <string name="title_activity_end_of_test_viewer">end_of_test_viewer</string>
 
 </resources>
