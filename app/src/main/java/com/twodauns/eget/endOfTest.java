@@ -1,5 +1,6 @@
 package com.twodauns.eget;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,9 +14,9 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import com.twodauns.eget.check.SocialStudiesKt;
+import com.twodauns.eget.check.Task;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -24,7 +25,9 @@ import java.util.Date;
 
 import static com.twodauns.eget.tester.questions;
 
-public class end_of_test extends AppCompatActivity {
+public class endOfTest extends AppCompatActivity {
+    public static int line;
+    public static Context ctn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +35,8 @@ public class end_of_test extends AppCompatActivity {
         setContentView(R.layout.activity_end_of_test);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ctn = this;
 
-        int line;
 
         int primaryScore = 0;
         int secondaryScore = 0;
@@ -171,7 +174,7 @@ public class end_of_test extends AppCompatActivity {
                             }
                             break;
                         }
-                        case 7:{
+                        case 7: {
                             if (q.correctAnswer.get(0).equals(tester.answers[i])) {
                                 correctOrNot.setTextColor(Color.GREEN);
                                 correctOrNot.setText("Правильно");
@@ -183,7 +186,7 @@ public class end_of_test extends AppCompatActivity {
                             }
                             break;
                         }
-                        case 8:{
+                        case 8: {
                             char[] sol = q.correctAnswer.get(0).toString().toCharArray();
                             Arrays.sort(sol);
                             char[] ans = tester.answers[i].toCharArray();
@@ -204,9 +207,9 @@ public class end_of_test extends AppCompatActivity {
                     show.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(end_of_test.this, end_of_test_viewer.class);
+                            Intent intent = new Intent(endOfTest.this, EndOfTestViewer.class);
                             Bundle bundle = new Bundle();
-                            if(correctOrNot.getText().equals("Правильно")) {
+                            if (correctOrNot.getText().equals("Правильно")) {
                                 intent.putExtra("trueOrFalse", true);
 //                                bundle.putBoolean("trueOrFalse", true);
                             } else {
@@ -218,8 +221,8 @@ public class end_of_test extends AppCompatActivity {
                             startActivity(intent);
                         }
                     });
-                    if(questions[i].question.getParent() != null)
-                        ((TableLayout)questions[i].question.getParent()).removeAllViews();
+                    if (questions[i].question.getParent() != null)
+                        ((TableLayout) questions[i].question.getParent()).removeAllViews();
                     TableLayout.LayoutParams params = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT, .5f);
                     //  params.setMargins(1,2,1,2);
                     tableRow.setLayoutParams(params);
@@ -357,7 +360,7 @@ public class end_of_test extends AppCompatActivity {
                             }
                             break;
                         }
-                        case 7:{
+                        case 7: {
                             if (q.correctAnswer.get(0).equals(tester.answers[i])) {
                                 correctOrNot.setTextColor(Color.GREEN);
                                 correctOrNot.setText("Правильно");
@@ -369,7 +372,7 @@ public class end_of_test extends AppCompatActivity {
                             }
                             break;
                         }
-                        case 8:{
+                        case 8: {
                             char[] sol = q.correctAnswer.get(0).toString().toCharArray();
                             Arrays.sort(sol);
                             char[] ans = tester.answers[i].toCharArray();
@@ -390,9 +393,9 @@ public class end_of_test extends AppCompatActivity {
                     show.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(end_of_test.this, end_of_test_viewer.class);
+                            Intent intent = new Intent(endOfTest.this, EndOfTestViewer.class);
                             Bundle bundle = new Bundle();
-                            if(correctOrNot.getText().equals("Правильно")) {
+                            if (correctOrNot.getText().equals("Правильно")) {
                                 intent.putExtra("trueOrFalse", true);
 //                                bundle.putBoolean("trueOrFalse", true);
                             } else {
@@ -404,8 +407,8 @@ public class end_of_test extends AppCompatActivity {
                             startActivity(intent);
                         }
                     });
-                    if(questions[i].question.getParent() != null)
-                        ((TableLayout)questions[i].question.getParent()).removeAllViews();
+                    if (questions[i].question.getParent() != null)
+                        ((TableLayout) questions[i].question.getParent()).removeAllViews();
                     TableLayout.LayoutParams params = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT, .5f);
                     //  params.setMargins(1,2,1,2);
                     tableRow.setLayoutParams(params);
@@ -543,7 +546,7 @@ public class end_of_test extends AppCompatActivity {
                             }
                             break;
                         }
-                        case 7:{
+                        case 7: {
                             if (q.correctAnswer.get(0).equals(tester.answers[i])) {
                                 correctOrNot.setTextColor(Color.GREEN);
                                 correctOrNot.setText("Правильно");
@@ -555,7 +558,7 @@ public class end_of_test extends AppCompatActivity {
                             }
                             break;
                         }
-                        case 8:{
+                        case 8: {
                             char[] sol = q.correctAnswer.get(0).toString().toCharArray();
                             Arrays.sort(sol);
                             char[] ans = tester.answers[i].toCharArray();
@@ -576,9 +579,9 @@ public class end_of_test extends AppCompatActivity {
                     show.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(end_of_test.this, end_of_test_viewer.class);
+                            Intent intent = new Intent(endOfTest.this, EndOfTestViewer.class);
                             Bundle bundle = new Bundle();
-                            if(correctOrNot.getText().equals("Правильно")) {
+                            if (correctOrNot.getText().equals("Правильно")) {
                                 intent.putExtra("trueOrFalse", true);
 //                                bundle.putBoolean("trueOrFalse", true);
                             } else {
@@ -590,8 +593,8 @@ public class end_of_test extends AppCompatActivity {
                             startActivity(intent);
                         }
                     });
-                    if(questions[i].question.getParent() != null)
-                        ((TableLayout)questions[i].question.getParent()).removeAllViews();
+                    if (questions[i].question.getParent() != null)
+                        ((TableLayout) questions[i].question.getParent()).removeAllViews();
                     TableLayout.LayoutParams params = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT, .5f);
                     //  params.setMargins(1,2,1,2);
                     tableRow.setLayoutParams(params);
@@ -729,7 +732,7 @@ public class end_of_test extends AppCompatActivity {
                             }
                             break;
                         }
-                        case 7:{
+                        case 7: {
                             if (q.correctAnswer.get(0).equals(tester.answers[i])) {
                                 correctOrNot.setTextColor(Color.GREEN);
                                 correctOrNot.setText("Правильно");
@@ -741,7 +744,7 @@ public class end_of_test extends AppCompatActivity {
                             }
                             break;
                         }
-                        case 8:{
+                        case 8: {
                             char[] sol = q.correctAnswer.get(0).toString().toCharArray();
                             Arrays.sort(sol);
                             char[] ans = tester.answers[i].toCharArray();
@@ -762,9 +765,9 @@ public class end_of_test extends AppCompatActivity {
                     show.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(end_of_test.this, end_of_test_viewer.class);
+                            Intent intent = new Intent(endOfTest.this, EndOfTestViewer.class);
                             Bundle bundle = new Bundle();
-                            if(correctOrNot.getText().equals("Правильно")) {
+                            if (correctOrNot.getText().equals("Правильно")) {
                                 intent.putExtra("trueOrFalse", true);
 //                                bundle.putBoolean("trueOrFalse", true);
                             } else {
@@ -776,8 +779,8 @@ public class end_of_test extends AppCompatActivity {
                             startActivity(intent);
                         }
                     });
-                    if(questions[i].question.getParent() != null)
-                        ((TableLayout)questions[i].question.getParent()).removeAllViews();
+                    if (questions[i].question.getParent() != null)
+                        ((TableLayout) questions[i].question.getParent()).removeAllViews();
                     TableLayout.LayoutParams params = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT, .5f);
                     //  params.setMargins(1,2,1,2);
                     tableRow.setLayoutParams(params);
@@ -915,7 +918,7 @@ public class end_of_test extends AppCompatActivity {
                             }
                             break;
                         }
-                        case 7:{
+                        case 7: {
                             if (q.correctAnswer.get(0).equals(tester.answers[i])) {
                                 correctOrNot.setTextColor(Color.GREEN);
                                 correctOrNot.setText("Правильно");
@@ -927,7 +930,7 @@ public class end_of_test extends AppCompatActivity {
                             }
                             break;
                         }
-                        case 8:{
+                        case 8: {
                             char[] sol = q.correctAnswer.get(0).toString().toCharArray();
                             Arrays.sort(sol);
                             char[] ans = tester.answers[i].toCharArray();
@@ -948,9 +951,9 @@ public class end_of_test extends AppCompatActivity {
                     show.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(end_of_test.this, end_of_test_viewer.class);
+                            Intent intent = new Intent(endOfTest.this, EndOfTestViewer.class);
                             Bundle bundle = new Bundle();
-                            if(correctOrNot.getText().equals("Правильно")) {
+                            if (correctOrNot.getText().equals("Правильно")) {
                                 intent.putExtra("trueOrFalse", true);
 //                                bundle.putBoolean("trueOrFalse", true);
                             } else {
@@ -962,8 +965,8 @@ public class end_of_test extends AppCompatActivity {
                             startActivity(intent);
                         }
                     });
-                    if(questions[i].question.getParent() != null)
-                        ((TableLayout)questions[i].question.getParent()).removeAllViews();
+                    if (questions[i].question.getParent() != null)
+                        ((TableLayout) questions[i].question.getParent()).removeAllViews();
                     TableLayout.LayoutParams params = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT, .5f);
                     //  params.setMargins(1,2,1,2);
                     tableRow.setLayoutParams(params);
@@ -1109,7 +1112,7 @@ public class end_of_test extends AppCompatActivity {
                             }
                             break;
                         }
-                        case 7:{
+                        case 7: {
                             if (q.correctAnswer.get(0).equals(tester.answers[i])) {
                                 correctOrNot.setTextColor(Color.GREEN);
                                 correctOrNot.setText("Правильно");
@@ -1121,7 +1124,7 @@ public class end_of_test extends AppCompatActivity {
                             }
                             break;
                         }
-                        case 8:{
+                        case 8: {
                             char[] sol = q.correctAnswer.get(0).toString().toCharArray();
                             Arrays.sort(sol);
                             char[] ans = tester.answers[i].toCharArray();
@@ -1142,9 +1145,9 @@ public class end_of_test extends AppCompatActivity {
                     show.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(end_of_test.this, end_of_test_viewer.class);
+                            Intent intent = new Intent(endOfTest.this, EndOfTestViewer.class);
                             Bundle bundle = new Bundle();
-                            if(correctOrNot.getText().equals("Правильно")) {
+                            if (correctOrNot.getText().equals("Правильно")) {
                                 intent.putExtra("trueOrFalse", true);
 //                                bundle.putBoolean("trueOrFalse", true);
                             } else {
@@ -1156,8 +1159,8 @@ public class end_of_test extends AppCompatActivity {
                             startActivity(intent);
                         }
                     });
-                    if(questions[i].question.getParent() != null)
-                        ((TableLayout)questions[i].question.getParent()).removeAllViews();
+                    if (questions[i].question.getParent() != null)
+                        ((TableLayout) questions[i].question.getParent()).removeAllViews();
                     TableLayout.LayoutParams params = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT, .5f);
                     //  params.setMargins(1,2,1,2);
                     tableRow.setLayoutParams(params);
@@ -1295,7 +1298,7 @@ public class end_of_test extends AppCompatActivity {
                             }
                             break;
                         }
-                        case 7:{
+                        case 7: {
                             if (q.correctAnswer.get(0).equals(tester.answers[i])) {
                                 correctOrNot.setTextColor(Color.GREEN);
                                 correctOrNot.setText("Правильно");
@@ -1307,7 +1310,7 @@ public class end_of_test extends AppCompatActivity {
                             }
                             break;
                         }
-                        case 8:{
+                        case 8: {
                             char[] sol = q.correctAnswer.get(0).toString().toCharArray();
                             Arrays.sort(sol);
                             char[] ans = tester.answers[i].toCharArray();
@@ -1328,9 +1331,9 @@ public class end_of_test extends AppCompatActivity {
                     show.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(end_of_test.this, end_of_test_viewer.class);
+                            Intent intent = new Intent(endOfTest.this, EndOfTestViewer.class);
                             Bundle bundle = new Bundle();
-                            if(correctOrNot.getText().equals("Правильно")) {
+                            if (correctOrNot.getText().equals("Правильно")) {
                                 intent.putExtra("trueOrFalse", true);
 //                                bundle.putBoolean("trueOrFalse", true);
                             } else {
@@ -1342,8 +1345,8 @@ public class end_of_test extends AppCompatActivity {
                             startActivity(intent);
                         }
                     });
-                    if(questions[i].question.getParent() != null)
-                        ((TableLayout)questions[i].question.getParent()).removeAllViews();
+                    if (questions[i].question.getParent() != null)
+                        ((TableLayout) questions[i].question.getParent()).removeAllViews();
                     TableLayout.LayoutParams params = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT, .5f);
                     //  params.setMargins(1,2,1,2);
                     tableRow.setLayoutParams(params);
@@ -1356,192 +1359,205 @@ public class end_of_test extends AppCompatActivity {
                 i++;
             }
         } else if (MainActivity.contentDescription.equals("Обществознание")) {
+//            int i = 0;
+//            line = 2;
+//            // if(tester.questions[0].)
+//            for (tester.Question q :
+//                    questions) {
+//                if (q != null && i < tester.notC) {
+//                    Button show = new Button(this);
+//                    show.setText("Посмотреть");
+//                    int finalI = i;
+//
+//                    TableRow tableRow = new TableRow(this);
+//                    TextView number = new TextView(this);
+//                    number.setGravity(Gravity.CENTER);
+//                    number.setText("№" + (i + 1));
+//                    number.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT, 0.2f));
+//
+//                    TextView correctOrNot = new TextView(this);
+//                    correctOrNot.setGravity(Gravity.CENTER);
+//                    correctOrNot.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT, 0.5f));
+//                    show.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT, 0.2f));
+//                    switch (i) {
+//                        case 0: {
+//                            for (CharSequence answ :
+//                                    q.correctAnswer) {
+//                                if (answ.equals(tester.answers[i])) {
+//                                    correctOrNot.setTextColor(Color.GREEN);
+//                                    correctOrNot.setText("Правильно");
+//                                    primaryScore++;
+//                                    break;
+//                                } else {
+//                                    correctOrNot.setTextColor(Color.RED);
+//                                    correctOrNot.setText("Не правильно");
+//                                }
+//                            }
+//                            break;
+//                        }
+//                        case 1: {
+//                            String answ = tester.answers[i].replace(" ", "");
+//                            if (q.correctAnswer.get(0).equals(answ)) {
+//                                correctOrNot.setTextColor(Color.GREEN);
+//                                correctOrNot.setText("Правильно");
+//                                primaryScore++;
+//                                break;
+//                            } else {
+//                                correctOrNot.setTextColor(Color.RED);
+//                                correctOrNot.setText("Не правильно");
+//                            }
+//                            break;
+//                        }
+//                        case 2: {
+//                            char[] sol = q.correctAnswer.get(0).toString().toCharArray();
+//                            Arrays.sort(sol);
+//                            char[] ans = tester.answers[i].toCharArray();
+//                            Arrays.sort(ans);
+//                            if (Arrays.equals(ans, sol)) {
+//                                correctOrNot.setTextColor(Color.GREEN);
+//                                correctOrNot.setText("Правильно");
+//                                primaryScore++;
+//                                break;
+//                            } else {
+//                                correctOrNot.setTextColor(Color.RED);
+//                                correctOrNot.setText("Не правильно");
+//                            }
+//                            break;
+//                        }
+//                        case 3: {
+//                            char[] sol = q.correctAnswer.get(0).toString().toCharArray();
+//                            Arrays.sort(sol);
+//                            char[] ans = tester.answers[i].toCharArray();
+//                            Arrays.sort(ans);
+//                            if (Arrays.equals(ans, sol)) {
+//                                correctOrNot.setTextColor(Color.GREEN);
+//                                correctOrNot.setText("Правильно");
+//                                primaryScore += 2;
+//                                break;
+//                            } else {
+//                                correctOrNot.setTextColor(Color.RED);
+//                                correctOrNot.setText("Не правильно");
+//                            }
+//                            break;
+//                        }
+//                        case 4: {
+//                            if (q.correctAnswer.get(0).equals(tester.answers[i])) {
+//                                correctOrNot.setTextColor(Color.GREEN);
+//                                correctOrNot.setText("Правильно");
+//                                primaryScore += 2;
+//                                break;
+//                            } else {
+//                                correctOrNot.setTextColor(Color.RED);
+//                                correctOrNot.setText("Не правильно");
+//                            }
+//                            break;
+//                        }
+//                        case 5: {
+//                            char[] sol = q.correctAnswer.get(0).toString().toCharArray();
+//                            Arrays.sort(sol);
+//                            char[] ans = tester.answers[i].toCharArray();
+//                            Arrays.sort(ans);
+//                            if (Arrays.equals(ans, sol)) {
+//                                correctOrNot.setTextColor(Color.GREEN);
+//                                correctOrNot.setText("Правильно");
+//                                primaryScore += 2;
+//                                break;
+//                            } else {
+//                                correctOrNot.setTextColor(Color.RED);
+//                                correctOrNot.setText("Не правильно");
+//                            }
+//                            break;
+//                        }
+//                        case 6: {
+//                            char[] sol = q.correctAnswer.get(0).toString().toCharArray();
+//                            Arrays.sort(sol);
+//                            char[] ans = tester.answers[i].toCharArray();
+//                            Arrays.sort(ans);
+//                            if (Arrays.equals(ans, sol)) {
+//                                correctOrNot.setTextColor(Color.GREEN);
+//                                correctOrNot.setText("Правильно");
+//                                primaryScore += 2;
+//                                break;
+//                            } else {
+//                                correctOrNot.setTextColor(Color.RED);
+//                                correctOrNot.setText("Не правильно");
+//                            }
+//                            break;
+//                        }
+//                        case 7:{
+//                            if (q.correctAnswer.get(0).equals(tester.answers[i])) {
+//                                correctOrNot.setTextColor(Color.GREEN);
+//                                correctOrNot.setText("Правильно");
+//                                primaryScore += 2;
+//                                break;
+//                            } else {
+//                                correctOrNot.setTextColor(Color.RED);
+//                                correctOrNot.setText("Не правильно");
+//                            }
+//                            break;
+//                        }
+//                        case 8:{
+//                            char[] sol = q.correctAnswer.get(0).toString().toCharArray();
+//                            Arrays.sort(sol);
+//                            char[] ans = tester.answers[i].toCharArray();
+//                            Arrays.sort(ans);
+//                            if (Arrays.equals(ans, sol)) {
+//                                correctOrNot.setTextColor(Color.GREEN);
+//                                correctOrNot.setText("Правильно");
+//                                primaryScore += 2;
+//                                break;
+//                            } else {
+//                                correctOrNot.setTextColor(Color.RED);
+//                                correctOrNot.setText("Не правильно");
+//                            }
+//                            break;
+//                        }
+//
+//                    }
+//                    show.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            Intent intent = new Intent(endOfTest.this, EndOfTestViewer.class);
+//                            Bundle bundle = new Bundle();
+//                            if(correctOrNot.getText().equals("Правильно")) {
+//                                intent.putExtra("trueOrFalse", true);
+////                                bundle.putBoolean("trueOrFalse", true);
+//                            } else {
+//                                intent.putExtra("trueOrFalse", false);
+////                                bundle.putBoolean("trueOrFalse", false);
+//                            }
+////                            bundle.putInt("Number", finalI);
+//                            intent.putExtra("Number", finalI);
+//                            startActivity(intent);
+//                        }
+//                    });
+//                    if(questions[i].question.getParent() != null)
+//                    ((TableLayout)questions[i].question.getParent()).removeAllViews();
+//                    TableLayout.LayoutParams params = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT, .5f);
+//                    //  params.setMargins(1,2,1,2);
+//                    tableRow.setLayoutParams(params);
+//                    //tableRow.setBackgroundResource(R.drawable.border);
+//                    tableRow.addView(number);
+//                    tableRow.addView(correctOrNot);
+//                    tableRow.addView(show);
+//                    mainLayout.addView(tableRow);
+//                }
+//                i++;
+//            }
             int i = 0;
-            line = 2;
-            // if(tester.questions[0].)
-            for (tester.Question q :
-                    questions) {
-                if (q != null && i < tester.notC) {
-                    Button show = new Button(this);
-                    show.setText("Посмотреть");
-                    int finalI = i;
-
+            for (Task task : SocialStudiesKt.checkSS()) {
+                if (task != null) {
                     TableRow tableRow = new TableRow(this);
-                    TextView number = new TextView(this);
-                    number.setGravity(Gravity.CENTER);
-                    number.setText("№" + (i + 1));
-                    number.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT, 0.2f));
-
-                    TextView correctOrNot = new TextView(this);
-                    correctOrNot.setGravity(Gravity.CENTER);
-                    correctOrNot.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT, 0.5f));
-                    show.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT, 0.2f));
-                    switch (i) {
-                        case 0: {
-                            for (CharSequence answ :
-                                    q.correctAnswer) {
-                                if (answ.equals(tester.answers[i])) {
-                                    correctOrNot.setTextColor(Color.GREEN);
-                                    correctOrNot.setText("Правильно");
-                                    primaryScore++;
-                                    break;
-                                } else {
-                                    correctOrNot.setTextColor(Color.RED);
-                                    correctOrNot.setText("Не правильно");
-                                }
-                            }
-                            break;
-                        }
-                        case 1: {
-                            String answ = tester.answers[i].replace(" ", "");
-                            if (q.correctAnswer.get(0).equals(answ)) {
-                                correctOrNot.setTextColor(Color.GREEN);
-                                correctOrNot.setText("Правильно");
-                                primaryScore++;
-                                break;
-                            } else {
-                                correctOrNot.setTextColor(Color.RED);
-                                correctOrNot.setText("Не правильно");
-                            }
-                            break;
-                        }
-                        case 2: {
-                            char[] sol = q.correctAnswer.get(0).toString().toCharArray();
-                            Arrays.sort(sol);
-                            char[] ans = tester.answers[i].toCharArray();
-                            Arrays.sort(ans);
-                            if (Arrays.equals(ans, sol)) {
-                                correctOrNot.setTextColor(Color.GREEN);
-                                correctOrNot.setText("Правильно");
-                                primaryScore++;
-                                break;
-                            } else {
-                                correctOrNot.setTextColor(Color.RED);
-                                correctOrNot.setText("Не правильно");
-                            }
-                            break;
-                        }
-                        case 3: {
-                            char[] sol = q.correctAnswer.get(0).toString().toCharArray();
-                            Arrays.sort(sol);
-                            char[] ans = tester.answers[i].toCharArray();
-                            Arrays.sort(ans);
-                            if (Arrays.equals(ans, sol)) {
-                                correctOrNot.setTextColor(Color.GREEN);
-                                correctOrNot.setText("Правильно");
-                                primaryScore += 2;
-                                break;
-                            } else {
-                                correctOrNot.setTextColor(Color.RED);
-                                correctOrNot.setText("Не правильно");
-                            }
-                            break;
-                        }
-                        case 4: {
-                            if (q.correctAnswer.get(0).equals(tester.answers[i])) {
-                                correctOrNot.setTextColor(Color.GREEN);
-                                correctOrNot.setText("Правильно");
-                                primaryScore += 2;
-                                break;
-                            } else {
-                                correctOrNot.setTextColor(Color.RED);
-                                correctOrNot.setText("Не правильно");
-                            }
-                            break;
-                        }
-                        case 5: {
-                            char[] sol = q.correctAnswer.get(0).toString().toCharArray();
-                            Arrays.sort(sol);
-                            char[] ans = tester.answers[i].toCharArray();
-                            Arrays.sort(ans);
-                            if (Arrays.equals(ans, sol)) {
-                                correctOrNot.setTextColor(Color.GREEN);
-                                correctOrNot.setText("Правильно");
-                                primaryScore += 2;
-                                break;
-                            } else {
-                                correctOrNot.setTextColor(Color.RED);
-                                correctOrNot.setText("Не правильно");
-                            }
-                            break;
-                        }
-                        case 6: {
-                            char[] sol = q.correctAnswer.get(0).toString().toCharArray();
-                            Arrays.sort(sol);
-                            char[] ans = tester.answers[i].toCharArray();
-                            Arrays.sort(ans);
-                            if (Arrays.equals(ans, sol)) {
-                                correctOrNot.setTextColor(Color.GREEN);
-                                correctOrNot.setText("Правильно");
-                                primaryScore += 2;
-                                break;
-                            } else {
-                                correctOrNot.setTextColor(Color.RED);
-                                correctOrNot.setText("Не правильно");
-                            }
-                            break;
-                        }
-                        case 7:{
-                            if (q.correctAnswer.get(0).equals(tester.answers[i])) {
-                                correctOrNot.setTextColor(Color.GREEN);
-                                correctOrNot.setText("Правильно");
-                                primaryScore += 2;
-                                break;
-                            } else {
-                                correctOrNot.setTextColor(Color.RED);
-                                correctOrNot.setText("Не правильно");
-                            }
-                            break;
-                        }
-                        case 8:{
-                            char[] sol = q.correctAnswer.get(0).toString().toCharArray();
-                            Arrays.sort(sol);
-                            char[] ans = tester.answers[i].toCharArray();
-                            Arrays.sort(ans);
-                            if (Arrays.equals(ans, sol)) {
-                                correctOrNot.setTextColor(Color.GREEN);
-                                correctOrNot.setText("Правильно");
-                                primaryScore += 2;
-                                break;
-                            } else {
-                                correctOrNot.setTextColor(Color.RED);
-                                correctOrNot.setText("Не правильно");
-                            }
-                            break;
-                        }
-
-                    }
-                    show.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(end_of_test.this, end_of_test_viewer.class);
-                            Bundle bundle = new Bundle();
-                            if(correctOrNot.getText().equals("Правильно")) {
-                                intent.putExtra("trueOrFalse", true);
-//                                bundle.putBoolean("trueOrFalse", true);
-                            } else {
-                                intent.putExtra("trueOrFalse", false);
-//                                bundle.putBoolean("trueOrFalse", false);
-                            }
-//                            bundle.putInt("Number", finalI);
-                            intent.putExtra("Number", finalI);
-                            startActivity(intent);
-                        }
-                    });
-                    if(questions[i].question.getParent() != null)
-                    ((TableLayout)questions[i].question.getParent()).removeAllViews();
-                    TableLayout.LayoutParams params = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT, .5f);
-                    //  params.setMargins(1,2,1,2);
-                    tableRow.setLayoutParams(params);
-                    //tableRow.setBackgroundResource(R.drawable.border);
-                    tableRow.addView(number);
-                    tableRow.addView(correctOrNot);
-                    tableRow.addView(show);
+                    tableRow.addView(task.getNumber());
+                    tableRow.addView(task.getCorrectOrNot());
+                    setButtonAction(task);
+                    tableRow.addView(task.getShow());
                     mainLayout.addView(tableRow);
+                    if (questions[i].question.getParent() != null)
+                        ((TableLayout) questions[i].question.getParent()).removeAllViews();
+                    i++;
                 }
-                i++;
             }
-
         } else { //География
             line = 11;
             int i = 0;
@@ -1668,7 +1684,7 @@ public class end_of_test extends AppCompatActivity {
                             }
                             break;
                         }
-                        case 7:{
+                        case 7: {
                             if (q.correctAnswer.get(0).equals(tester.answers[i])) {
                                 correctOrNot.setTextColor(Color.GREEN);
                                 correctOrNot.setText("Правильно");
@@ -1680,7 +1696,7 @@ public class end_of_test extends AppCompatActivity {
                             }
                             break;
                         }
-                        case 8:{
+                        case 8: {
                             char[] sol = q.correctAnswer.get(0).toString().toCharArray();
                             Arrays.sort(sol);
                             char[] ans = tester.answers[i].toCharArray();
@@ -1701,9 +1717,9 @@ public class end_of_test extends AppCompatActivity {
                     show.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(end_of_test.this, end_of_test_viewer.class);
+                            Intent intent = new Intent(endOfTest.this, EndOfTestViewer.class);
                             Bundle bundle = new Bundle();
-                            if(correctOrNot.getText().equals("Правильно")) {
+                            if (correctOrNot.getText().equals("Правильно")) {
                                 intent.putExtra("trueOrFalse", true);
 //                                bundle.putBoolean("trueOrFalse", true);
                             } else {
@@ -1715,8 +1731,8 @@ public class end_of_test extends AppCompatActivity {
                             startActivity(intent);
                         }
                     });
-                    if(questions[i].question.getParent() != null)
-                        ((TableLayout)questions[i].question.getParent()).removeAllViews();
+                    if (questions[i].question.getParent() != null)
+                        ((TableLayout) questions[i].question.getParent()).removeAllViews();
                     TableLayout.LayoutParams params = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT, .5f);
                     //  params.setMargins(1,2,1,2);
                     tableRow.setLayoutParams(params);
@@ -1748,36 +1764,37 @@ public class end_of_test extends AppCompatActivity {
             b++;
         }
 
-//        try {
-//            BufferedReader br = new BufferedReader(new FileReader(classLoader.getResource("pIntos.csv").getFile()));
-//            while ((lineFromFile = br.readLine()) != null) {
-//                String[] set = lineFromFile.split(cvsSplitBy);
-//                primeInToSec[i] = Integer.parseInt(set[line]);
-//            }
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        while ((lineFromFile = br.) != null) {
-//                String[] set = lineFromFile.split(cvsSplitBy);
-//
-//
-//            }
         finalMark.setText("Итоговый первичный балл " + primaryScore + "\n" + "Итоговый балл " + secondaryScore);
 
     }
 
-    //  @RequiresApi(api = Build.VERSION_CODES.O)
+    public void setButtonAction(Task task) {
+        task.getShow().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ctn, EndOfTestViewer.class);
+                if (task.getCorrectOrNot().getText().equals("Правильно")) {
+                    intent.putExtra("trueOrFalse", true);
+                } else if (task.getCorrectOrNot().getText().equals("Частично правильно")) {
+                    intent.putExtra("Array", task.getArray());
+                } else {
+                    intent.putExtra("trueOrFalse", false);
+                }
+                intent.putExtra("Number", task.getI());
+                startActivity(intent);
+            }
+        });
+    }
+
     @Override
     public void onBackPressed() {
         save(null);
     }
 
     public void save(View view) {
-        HistorySQLite historySQLite = new HistorySQLite(end_of_test.this);
+        HistorySQLite historySQLite = new HistorySQLite(endOfTest.this);
         historySQLite.setLesson((String) MainActivity.contentDescription, Integer.parseInt(new SimpleDateFormat("yyyyMMdd").format(new Date())));
-        Intent intent = new Intent(end_of_test.this, MainActivity.class);
+        Intent intent = new Intent(endOfTest.this, MainActivity.class);
         startActivity(intent);
     }
 }

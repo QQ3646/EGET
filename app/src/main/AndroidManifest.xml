@@ -12,11 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".end_of_test_viewer"
+            android:name=".EndOfTestViewer"
             android:label="@string/title_activity_end_of_test_viewer"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".end_of_test"
+            android:name=".endOfTest"
             android:label="@string/title_activity_end_of_test"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

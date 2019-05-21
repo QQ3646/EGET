@@ -4,5 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="datePlus">#4CAF50</color>
-    <color name="dateMinus">#BE0000</color>
+    <color name="dateMinus">#1F2022</color>
+    <color name="partiallyTrue">#FFBF00</color>
+    <color name="allFalse">#F52E2E</color>>
 </resources>
