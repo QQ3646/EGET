@@ -6,9 +6,9 @@ import android.widget.Button
 import android.widget.TableRow
 import android.widget.TextView
 import com.twodauns.eget.R
-import com.twodauns.eget.endOfTest
-import com.twodauns.eget.endOfTest.ctn
-import com.twodauns.eget.endOfTest.line
+import com.twodauns.eget.EndOfTest
+import com.twodauns.eget.EndOfTest.ctn
+import com.twodauns.eget.EndOfTest.line
 import com.twodauns.eget.tester
 import com.twodauns.eget.tester.notC
 import com.twodauns.eget.tester.questions
@@ -21,16 +21,16 @@ fun checkSS(): Array<Task?> {
     var primaryScore = 0
     for (q in questions) {
         if (q != null && i < notC) {
-            val show = Button(endOfTest.ctn)
+            val show = Button(EndOfTest.ctn)
             show.text = "Посмотреть"
             show.layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT, 0.2f)
 
-            val number = TextView(endOfTest.ctn)
+            val number = TextView(EndOfTest.ctn)
             number.gravity = Gravity.CENTER
             number.text = "№" + (i + 1)
             number.layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 0.2f)
 
-            val correctOrNot = TextView(endOfTest.ctn)
+            val correctOrNot = TextView(EndOfTest.ctn)
             correctOrNot.gravity = Gravity.CENTER
             correctOrNot.layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 0.5f)
             (correctOrNot.layoutParams as TableRow.LayoutParams).setMargins(3,3,3,3)
@@ -342,7 +342,7 @@ fun checkSS(): Array<Task?> {
                         correctOrNot.text = "Не правильно"
                     }
                 }
-                21 -> {
+                21 -> { //вторая часть, без проверки
                     val sol = q!!.correctAnswer.get(0).toString().toCharArray()
                     Arrays.sort(sol)
                     val ans = tester.answers[i].toCharArray()
@@ -356,7 +356,7 @@ fun checkSS(): Array<Task?> {
                         correctOrNot.text = "Не правильно"
                     }
                 }
-                22 -> {
+                22 -> {//вторая часть, без проверки
                     if (q!!.correctAnswer.get(0) == tester.answers[i]) {
                         correctOrNot.setTextColor(Color.GREEN)
                         correctOrNot.text = "Правильно"
@@ -366,7 +366,7 @@ fun checkSS(): Array<Task?> {
                         correctOrNot.text = "Не правильно"
                     }
                 }
-                23 -> {
+                23 -> {//вторая часть, без проверки
                     val sol = q!!.correctAnswer.get(0).toString().toCharArray()
                     Arrays.sort(sol)
                     val ans = tester.answers[i].toCharArray()
@@ -380,7 +380,7 @@ fun checkSS(): Array<Task?> {
                         correctOrNot.text = "Не правильно"
                     }
                 }
-                24 -> {
+                24 -> {//вторая часть, без проверки
                     val sol = q!!.correctAnswer.get(0).toString().toCharArray()
                     Arrays.sort(sol)
                     val ans = tester.answers[i].toCharArray()
@@ -394,7 +394,7 @@ fun checkSS(): Array<Task?> {
                         correctOrNot.text = "Не правильно"
                     }
                 }
-                25 -> {
+                25 -> {//вторая часть, без проверки
                     if (q!!.correctAnswer.get(0) == tester.answers[i]) {
                         correctOrNot.setTextColor(Color.GREEN)
                         correctOrNot.text = "Правильно"
@@ -404,7 +404,7 @@ fun checkSS(): Array<Task?> {
                         correctOrNot.text = "Не правильно"
                     }
                 }
-                26 -> {
+                26 -> {//вторая часть, без проверки
                     val sol = q!!.correctAnswer.get(0).toString().toCharArray()
                     Arrays.sort(sol)
                     val ans = tester.answers[i].toCharArray()
@@ -418,7 +418,7 @@ fun checkSS(): Array<Task?> {
                         correctOrNot.text = "Не правильно"
                     }
                 }
-                27 -> {
+                27 -> {//вторая часть, без проверки
                     if (q!!.correctAnswer.get(0) == tester.answers[i]) {
                         correctOrNot.setTextColor(Color.GREEN)
                         correctOrNot.text = "Правильно"
@@ -428,7 +428,7 @@ fun checkSS(): Array<Task?> {
                         correctOrNot.text = "Не правильно"
                     }
                 }
-                28 -> {
+                28 -> {//вторая часть, без проверки
                     val sol = q!!.correctAnswer.get(0).toString().toCharArray()
                     Arrays.sort(sol)
                     val ans = tester.answers[i].toCharArray()
@@ -443,16 +443,10 @@ fun checkSS(): Array<Task?> {
                     }
                 }
             }
-//            setButtonAction(show)
-//            if (questions[i].question.getParent() != null)
-//                (questions[i].question.getParent() as TableLayout).removeAllViews()
-//            val params = TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT, .5f)
-//            //  params.setMargins(1,2,1,2);
-//            tableRow.layoutParams = params
-            //tableRow.setBackgroundResource(R.drawable.border);
             tasks[i] = Task(show, number, correctOrNot, i, checkWithoutOrder)
             i++
         }
     }
+//    var checkResult = CheckResult(tasks, ,primaryScore, line)
     return tasks
 }

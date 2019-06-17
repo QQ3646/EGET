@@ -3,6 +3,7 @@
     package="com.twodauns.eget">
     <!-- To access Google+ APIs: -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -11,12 +12,14 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".EndOfTestCViewer"></activity>
+        <activity android:name=".CChecker" />
         <activity
             android:name=".EndOfTestViewer"
             android:label="@string/title_activity_end_of_test_viewer"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".endOfTest"
+            android:name=".EndOfTest"
             android:label="@string/title_activity_end_of_test"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -31,6 +34,10 @@
             android:name=".TestsPicker"
             android:label="@string/title_activity_tests_picker"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- <activity android:name=".MainActivity2" /> -->
+        <activity
+            android:name=".testkt"
+            android:label="tester2"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

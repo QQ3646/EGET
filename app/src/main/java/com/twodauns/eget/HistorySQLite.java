@@ -28,6 +28,8 @@ public class HistorySQLite extends SQLiteOpenHelper {
                 "\t\"TP\"\tINTEGER\n" +
                 ");";
         sqLiteDatabase.execSQL(query);
+
+
     }
 
     class NameFromSQL {
@@ -106,6 +108,4 @@ public class HistorySQLite extends SQLiteOpenHelper {
         }
         return strings;
     }
-
-
 }

@@ -5,12 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import java.io.File;
 
 public class    TestsPicker extends AppCompatActivity {
     int counter = 1;
@@ -21,16 +22,22 @@ public class    TestsPicker extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tests_picker);
         Toolbar toolbar = findViewById(R.id.toolbar);
+
+        if(MainActivity.contentDescription.equals("Русский язык") ||
+            MainActivity.contentDescription.equals("Математика: базовый уровень")) {
+//            toolbar.setSubtitleTextColor(getResources().getColor(R.color.def));
+            toolbar.setTitleTextColor(getResources().getColor(R.color.def));
+//            toolbar.getContext().setTheme(R.style.Theme_AppCompat_Light_DarkActionBar);  РАБОТАЕТ
+            toolbar.getContext().setTheme(R.style.ThemeOverlay_AppCompat_Light);
+//            getSupportActionBar().setHomeAsUpIndicator(R.attr.actionModeCloseDrawable);
+        }
         setSupportActionBar(toolbar);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setSubtitle(MainActivity.contentDescription);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        toolbar.setBackgroundColor(MainActivity.color);
         int monthAmount = 1; //дописать
         int variantAmount = 15; //дописать   // 1-15
         int rowAmount = (int) Math.ceil((double) variantAmount / 5);
@@ -80,11 +87,17 @@ public class    TestsPicker extends AppCompatActivity {
         button.setTextSize(7f);
         counter++;
         button.setOnClickListener(view -> {
-            Intent intent = new Intent(TestsPicker.this, tester.class);
+            Intent intent = new Intent(TestsPicker.this, testkt.class);
             startActivity(intent);
         });
         button.setLayoutParams(params);
         row.addView(button);
     }
 
+    @Override
+    public void onBackPressed() {
+        File dir = new File(this.getFilesDir().getAbsolutePath());
+        dir.mkdir();
+        super.onBackPressed();
+    }
 }

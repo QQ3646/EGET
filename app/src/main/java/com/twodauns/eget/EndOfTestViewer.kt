@@ -2,11 +2,8 @@ package com.twodauns.eget
 
 import android.graphics.Color
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar
-import android.text.Spannable
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
@@ -16,7 +13,6 @@ import android.widget.*
 import com.twodauns.eget.tester.answer
 import com.twodauns.eget.tester.questions
 
-import kotlinx.android.synthetic.main.activity_end_of_test_viewer.*
 import kotlinx.android.synthetic.main.content_end_of_test_viewer.*
 
 
@@ -28,13 +24,20 @@ class EndOfTestViewer : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_end_of_test_viewer)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        if (MainActivity.contentDescription == "Русский язык" || MainActivity.contentDescription == "Математика: базовый уровень") {
+            //            toolbar.setSubtitleTextColor(getResources().getColor(R.color.def));
+            toolbar.setTitleTextColor(resources.getColor(R.color.def))
+            //            toolbar.getContext().setTheme(R.style.Theme_AppCompat_Light_DarkActionBar);  РАБОТАЕТ
+            toolbar.context.setTheme(R.style.ThemeOverlay_AppCompat_Light)
+            //            getSupportActionBar().setHomeAsUpIndicator(R.attr.actionModeCloseDrawable);
+        }
         setSupportActionBar(toolbar)
+        toolbar.setBackgroundColor(MainActivity.color)
         try {
             mb = intent.extras.get("Array") as Array<Boolean?>
             tryCatch = true
         } catch (exept: IllegalStateException) {
         } catch (exept: TypeCastException) {
-
         }
         quest = findViewById(R.id.linn)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -59,7 +62,7 @@ class EndOfTestViewer : AppCompatActivity() {
 //            var ed = EditText(this)
 //            ed.setText(questions[number].solveForView.text)
             var ed = TextView(this)
-            var span: Spannable = SpannableString(questions[number].solveForView.text.filter { it != '.' })
+            var span = SpannableString(questions[number].solveForView.text.filter { it != '.' })
             if (tryCatch) {
 //                var span: Spannable = SpannableString(questions[number].solveForView.text.filter { it != '.' })
                 for ((i, bool) in mb.withIndex()) {
@@ -86,10 +89,10 @@ class EndOfTestViewer : AppCompatActivity() {
             quest.addView(questions[number].question)
             var ed = TextView(this)
 //            ed.isFocusable = false
-            if (answer[number].text.toString().equals(""))
+            if (answer[number].text.toString() == "")
                 ed.text = "Вы не дали ответа"
             else
-                ed.text = "Ваш ответ: " + answer[number].text.toString()
+                ed.text = "Ваш ответ: ${answer[number].text}"
             ed.gravity = Gravity.CENTER
             ed.textSize = 21f
             answerLayout.addView(ed)

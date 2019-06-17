@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".tester">
+    tools:context=".testkt">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout2"
@@ -73,7 +73,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
-        android:onClick="onClickPreviousButton"
         android:text="@string/BackButton"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -85,7 +84,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:onClick="onClickNextButton"
         android:text="@string/NextButton"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -98,7 +96,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        android:onClick="onClickSelectButton"
         android:text="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/nextQuestion"

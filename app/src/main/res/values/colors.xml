@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
@@ -7,4 +8,29 @@
     <color name="dateMinus">#1F2022</color>
     <color name="partiallyTrue">#FFBF00</color>
     <color name="allFalse">#F52E2E</color>>
+
+    <color name="rus">#FDFD9E</color>>
+    <color name="inf">#0000BE</color>>
+
+    <color name="mthP">#DD00FE</color>>
+    <color name="mthB">#01FDFD</color>>
+
+    <color name="eng">#DE3B01</color>>
+    <color name="gfs">#735183</color>>
+
+    <color name="german">#858585</color>>
+    <color name="france">#755A57</color>>
+    <color name="spanish">#E30B5C</color>>
+
+    <color name="phs">#007EFE</color>>
+    <color name="chm">#FD4199</color>>
+    <color name="bio">#7EB24D</color>>
+    <color name="geo">#718E01</color>>
+    <color name="scl">#A61301</color>>
+    <color name="ltr">#F9A41A</color>>
+    <color name="hst">#4DFD41</color>>
+    <color name="def">#2B2B2B</color>>
+
+    <color name="subtitle">#747448</color>
+    <color name="title">#4D4D31</color>
 </resources>
